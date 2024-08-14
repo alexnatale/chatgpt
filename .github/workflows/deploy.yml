@@ -1,0 +1,23 @@
+name: Build and Deploy
+on:
+  push:
+    branches:
+      - main  # or your default branch name
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Inject Secrets 🔒
+        run: |
+          sed -i 's#{{HASHED_ACCESS_CODE}}#${{ secrets.HASHED_ACCESS_CODE }}#g' index.html
+          sed -i 's#{{REDIRECT_URL}}#${{ secrets.REDIRECT_URL }}#g' index.html
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages  # The branch the action should deploy to
+          folder: .  # The folder the action should deploy
