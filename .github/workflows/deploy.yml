@@ -14,8 +14,8 @@ jobs:
       - name: Inject Secrets 🔒
         run: |
           echo "Injecting secrets..."
-          sed -i "s/{{HASHED_ACCESS_CODE}}/${{ secrets.HASHED_ACCESS_CODE }}/g" index.html
-          sed -i "s/{{REDIRECT_URL}}/${{ secrets.REDIRECT_URL }}/g" index.html
+          sed -i 's|{{HASHED_ACCESS_CODE}}|'"${{ secrets.HASHED_ACCESS_CODE }}"'|g' index.html
+          sed -i 's|{{REDIRECT_URL}}|'"${{ secrets.REDIRECT_URL }}"'|g' index.html
           echo "Secrets injected. Displaying first few lines of index.html:"
           head -n 20 index.html
 
