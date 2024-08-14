@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Code Hash Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #hashResult {
+            word-break: break-all;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Access Code Hash Generator</h2>
+        <input type="text" id="accessCode" placeholder="Enter access code">
+        <button onclick="generateHash()">Generate Hash</button>
+        <div id="hashResult"></div>
+    </div>
+
+    <script>
+        function generateHash() {
+            const code = document.getElementById('accessCode').value;
+            const hash = sha256(code);
+            document.getElementById('hashResult').innerHTML = `
+                <strong>Generated Hash:</strong><br>
+                ${hash}<br><br>
+                <em>Use this hash as the value for your HASHED_ACCESS_CODE secret in GitHub.</em>
+            `;
+        }
+    </script>
+</body>
+</html>
