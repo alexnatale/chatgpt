@@ -2,7 +2,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main  # or your default branch name
+      - main  # This triggers the workflow when you push to the main branch
 
 jobs:
   build-and-deploy:
@@ -14,13 +14,15 @@ jobs:
       - name: Inject Secrets 🔒
         run: |
           echo "Injecting secrets..."
-          sed -i 's#{{HASHED_ACCESS_CODE}}#'"${{ secrets.HASHED_ACCESS_CODE }}"'#g' index.html
-          sed -i 's#{{REDIRECT_URL}}#'"${{ secrets.REDIRECT_URL }}"'#g' index.html
+          sed -i "s/{{HASHED_ACCESS_CODE}}/${{ secrets.HASHED_ACCESS_CODE }}/g" index.html
+          sed -i "s/{{REDIRECT_URL}}/${{ secrets.REDIRECT_URL }}/g" index.html
           echo "Secrets injected. Displaying first few lines of index.html:"
           head -n 20 index.html
 
-      - name: Deploy 🚀
+      - name: Deploy to GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           branch: gh-pages  # The branch the action should deploy to
           folder: .  # The folder the action should deploy
+          clean: true  # Automatically remove deleted files from the deploy branch
+          commit-message: "Deploy updates from main branch"
