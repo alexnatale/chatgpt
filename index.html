@@ -38,7 +38,7 @@
             background-color: #0056b3;
         }
     </style>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -55,9 +55,15 @@
             const code = document.getElementById('accessCode').value;
             const hash = sha256(code);
             
+            console.log('Entered Code:', code);
+            console.log('Generated Hash:', hash);
+            console.log('Correct Hash:', correctHash);
+            
             if (hash === correctHash) {
+                console.log('Hash match! Redirecting...');
                 window.location.href = redirectUrl;
             } else {
+                console.log('Hash mismatch!');
                 alert('Incorrect code. Please try again.');
             }
         }
